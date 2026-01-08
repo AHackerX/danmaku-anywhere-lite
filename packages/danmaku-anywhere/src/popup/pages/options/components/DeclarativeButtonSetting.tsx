@@ -10,18 +10,24 @@ import type { ButtonSettingConfig } from '@/common/settings/settingConfigs'
 interface DeclarativeButtonSettingProps {
   config: ButtonSettingConfig
   isLoading?: boolean
+  onClick?: () => void | Promise<void>
 }
 
 export const DeclarativeButtonSetting = ({
   config,
   isLoading: isLoadingProp,
+  onClick,
 }: DeclarativeButtonSettingProps) => {
   const [isLoadingState, setIsLoading] = useState(false)
 
   async function handleClick() {
     setIsLoading(true)
     try {
-      await config.handler()
+      if (onClick) {
+        await onClick()
+      } else {
+        await config.handler()
+      }
     } finally {
       setIsLoading(false)
     }

@@ -145,6 +145,15 @@ export const UPLOAD_DEBUG_DATA_BUTTON: ButtonSettingConfig = {
   },
 }
 
+export const RESET_EXTENSION_BUTTON: ButtonSettingConfig = {
+  id: 'button.resetExtension',
+  label: () => i18n.t('optionsPage.resetExtension', 'Reset Extension'),
+  category: 'advanced',
+  type: 'button',
+  // Handler is empty because we need confirmation dialog, handled in component
+  handler: async () => {},
+}
+
 export const settingConfigs = {
   advanced: advancedSettings,
   player: playerSettings,

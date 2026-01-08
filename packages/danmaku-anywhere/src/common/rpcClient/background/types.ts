@@ -129,6 +129,7 @@ export type BackgroundMethods = {
   getConfigDanmuIcu: RPCDef<{ force?: boolean } | void, BaseUrlConfig>
   providerConfigDelete: RPCDef<string, void>
   testAiProvider: RPCDef<AiProviderConfigInput, TestAiProviderResponse>
+  resetExtension: RPCDef<void, void>
 }
 
 type InputWithFrameId<TInput> = TInput extends void

@@ -8,14 +8,22 @@ const PRUNE_CHECK_PROBABILITY = 0.05
 
 @injectable('Singleton')
 export class LogService {
+  private disabled = false
+
   constructor(@inject(LogsDbService) private logsDb: LogsDbService) {}
 
+  disable() {
+    this.disabled = true
+  }
+
   async log(entry: LogEntry) {
+    if (this.disabled) return
     // best effort save, non-blocking
     void this.saveLog(entry)
   }
 
   private async saveLog(entry: LogEntry) {
+    if (this.disabled) return
     try {
       await this.logsDb.add(entry)
 

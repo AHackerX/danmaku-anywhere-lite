@@ -428,7 +428,11 @@
       }
     },
     "uploadDebugData": "提交调试数据",
-    "uploadDebugDataSuccess": "提交成功 {{ id }}"
+    "uploadDebugDataSuccess": "提交成功 {{ id }}",
+    "resetExtension": "重置扩展",
+    "resetExtension.title": "重置扩展",
+    "resetExtension.message": "确定要重置扩展吗？这将删除所有设置、已保存的弹幕和缓存数据。此操作无法撤销。",
+    "resetExtension.confirm": "重置"
   },
   "providers": {
     "alert": {

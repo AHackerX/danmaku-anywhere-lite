@@ -442,7 +442,11 @@
       }
     },
     "uploadDebugData": "Submit Debug Data",
-    "uploadDebugDataSuccess": "Submitted {{ id }}"
+    "uploadDebugDataSuccess": "Submitted {{ id }}",
+    "resetExtension": "Reset Extension",
+    "resetExtension.title": "Reset Extension",
+    "resetExtension.message": "Are you sure you want to reset the extension? This will delete all settings, saved danmaku, and cached data. This action cannot be undone.",
+    "resetExtension.confirm": "Reset"
   },
   "providers": {
     "alert": {

@@ -38,6 +38,7 @@ import { SeasonMap } from '@/common/seasonMap/SeasonMap'
 import { DebugFileService } from '../services/DebugFile/DebugFile.service'
 import { EpisodeMatchingService } from '../services/matching/EpisodeMatchingService'
 import { ProviderService } from '../services/providers/ProviderService'
+import { ResetService } from '../services/ResetService'
 
 @injectable('Singleton')
 export class RpcManager {
@@ -65,7 +66,8 @@ export class RpcManager {
     @inject(DanmakuAnywhereDb) private db: DanmakuAnywhereDb,
     @inject(LoggerSymbol) logger: ILogger,
     @inject(DebugFileService) private debugFileService: DebugFileService,
-    @inject(ImageCacheService) private imageCacheService: ImageCacheService
+    @inject(ImageCacheService) private imageCacheService: ImageCacheService,
+    @inject(ResetService) private resetService: ResetService
   ) {
     this.logger = logger.sub('[RpcManager]')
   }
@@ -318,6 +320,11 @@ export class RpcManager {
           await this.providerConfigService.deleteFromStorage(id)
 
           void invalidateContentScriptData(sender.tab?.id)
+        },
+        resetExtension: async () => {
+          await this.resetService.resetAll()
+          // Reload the extension to apply changes
+          chrome.runtime.reload()
         },
       },
       {
