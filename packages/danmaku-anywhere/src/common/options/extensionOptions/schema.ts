@@ -142,6 +142,11 @@ export const extensionOptionsSchema = z.object({
   showReleaseNotes: z.boolean(),
 
   /**
+   * Whether to show release notes notification on update
+   */
+  enableReleaseNotesNotification: z.boolean(),
+
+  /**
    * Auto generated user id
    */
   id: z.string().optional(),

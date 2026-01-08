@@ -40,6 +40,7 @@ export const defaultExtensionOptions: ExtensionOptions = {
   matchLocalDanmaku: true,
   hotkeys: defaultKeymap,
   showReleaseNotes: false,
+  enableReleaseNotesNotification: true,
   enableAnalytics: true,
   id: undefined,
 }

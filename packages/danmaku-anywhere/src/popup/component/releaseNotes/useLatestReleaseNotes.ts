@@ -11,29 +11,44 @@ interface ReleaseNotesResponse {
   published_at: string
 }
 
+export type { ReleaseNotesResponse }
+
+const fetchReleaseNotes = async (): Promise<ReleaseNotesResponse> => {
+  let version = EXTENSION_VERSION
+  if (version === '1.2.1' || version === '1.2.2') {
+    version = '1.2.0' // Special case versions
+  }
+  const res = await fetch(
+    `https://api.github.com/repos/Mr-Quin/danmaku-anywhere/releases/tags/v${version}`
+  )
+
+  if (res.status !== 200) {
+    Logger.warn(`Failed to get release notes for v${version}`)
+    throw new Error(`Failed to get release notes for v${version}`)
+  }
+
+  const data: ReleaseNotesResponse = await res.json()
+  return data
+}
+
 export const useLatestReleaseNotes = () => {
   const { isLoading, data } = useExtensionOptions()
 
   const query = useQuery({
-    queryFn: async () => {
-      let version = EXTENSION_VERSION
-      if (version === '1.2.1' || version === '1.2.2') {
-        version = '1.2.0' // Special case versions
-      }
-      const res = await fetch(
-        `https://api.github.com/repos/Mr-Quin/danmaku-anywhere/releases/tags/v${version}`
-      )
-
-      if (res.status !== 200) {
-        Logger.warn(`Failed to get release notes for v${version}`)
-        throw new Error(`Failed to get release notes for v${version}`)
-      }
-
-      const data: ReleaseNotesResponse = await res.json()
-      return data
-    },
+    queryFn: fetchReleaseNotes,
     queryKey: controlQueryKeys.releaseNotes(),
     enabled: !isLoading && data.showReleaseNotes,
+    staleTime: Number.POSITIVE_INFINITY,
+    retry: false,
+  })
+
+  return query
+}
+
+export const useFetchReleaseNotes = () => {
+  const query = useQuery({
+    queryFn: fetchReleaseNotes,
+    queryKey: controlQueryKeys.releaseNotes(),
     staleTime: Number.POSITIVE_INFINITY,
     retry: false,
   })

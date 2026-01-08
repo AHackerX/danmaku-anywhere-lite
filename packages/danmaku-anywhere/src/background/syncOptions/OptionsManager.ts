@@ -27,7 +27,10 @@ export class OptionsManager {
       this.tryUpgradeOptions()
 
       if (details.reason === 'update') {
-        await this.extensionOptionsService.update({ showReleaseNotes: true })
+        const options = await this.extensionOptionsService.get()
+        if (options.enableReleaseNotesNotification) {
+          await this.extensionOptionsService.update({ showReleaseNotes: true })
+        }
         this.logger.info('Danmaku Anywhere Updated')
       } else {
         this.logger.info('Danmaku Anywhere Installed')

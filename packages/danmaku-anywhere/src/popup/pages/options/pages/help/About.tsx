@@ -7,6 +7,7 @@ import {
   GitHub,
   InfoOutlined,
   Launch,
+  NewReleases,
 } from '@mui/icons-material'
 import {
   Accordion,
@@ -34,6 +35,8 @@ import { useExtensionOptions } from '@/common/options/extensionOptions/useExtens
 import { docsLink } from '@/common/utils/utils'
 import { IMAGE_ASSETS } from '@/images/ImageAssets'
 import { OptionsPageToolBar } from '@/popup/component/OptionsPageToolbar'
+import { ReleaseNotesDialog } from '@/popup/component/releaseNotes/ReleaseNotesDialog'
+import { useFetchReleaseNotes } from '@/popup/component/releaseNotes/useLatestReleaseNotes'
 import { OptionsPageLayout } from '@/popup/layout/OptionsPageLayout'
 
 interface ResourceLinkContext {
@@ -42,6 +45,17 @@ interface ResourceLinkContext {
 }
 
 const resources = [
+  {
+    id: 'releaseNotes',
+    icon: () => <NewReleases color="info" />,
+    title: () => i18n.t('aboutPage.releaseNotes', 'Release Notes'),
+    description: () =>
+      i18n.t(
+        'aboutPage.releaseNotesDescription',
+        'View current version release notes'
+      ),
+    isAction: true,
+  },
   {
     id: 'docs',
     icon: () => <Article color="primary" />,
@@ -115,12 +129,21 @@ export const About = () => {
   const { toast } = useToast()
 
   const [expanded, setExpanded] = useState(true)
+  const [showReleaseNotes, setShowReleaseNotes] = useState(false)
+
+  const releaseNotesQuery = useFetchReleaseNotes()
 
   const version = chrome.runtime.getManifest().version
 
   async function handleCopy(text: string) {
     await navigator.clipboard.writeText(text)
     toast.success(t('common.copiedToClipboard', 'Copied to clipboard'))
+  }
+
+  const handleResourceClick = (resourceId: string) => {
+    if (resourceId === 'releaseNotes') {
+      setShowReleaseNotes(true)
+    }
   }
 
   return (
@@ -178,6 +201,7 @@ export const About = () => {
                 {hasLink && <Launch color="action" fontSize="small" />}
               </Stack>
             )
+            const isAction = 'isAction' in resource && resource.isAction
             return (
               <Card key={resource.id} variant="outlined">
                 {hasLink ? (
@@ -186,6 +210,13 @@ export const About = () => {
                     href={resource.link({ id: data.id || '', version })}
                     target="_blank"
                     rel="noreferrer noopener"
+                    sx={{ px: 2, py: 1 }}
+                  >
+                    {cardInner}
+                  </CardActionArea>
+                ) : isAction ? (
+                  <CardActionArea
+                    onClick={() => handleResourceClick(resource.id)}
                     sx={{ px: 2, py: 1 }}
                   >
                     {cardInner}
@@ -307,6 +338,12 @@ export const About = () => {
           </Typography>
         </Box>
       </Container>
+
+      <ReleaseNotesDialog
+        open={showReleaseNotes}
+        onClose={() => setShowReleaseNotes(false)}
+        data={releaseNotesQuery.data}
+      />
     </OptionsPageLayout>
   )
 }

@@ -35,6 +35,18 @@ export type SettingConfig<S> = ToggleSettingConfig<S>
 
 const advancedSettings: SettingConfig<ExtensionOptions>[] = [
   {
+    id: 'toggle.enableReleaseNotesNotification',
+    label: () =>
+      i18n.t(
+        'optionsPage.enableReleaseNotesNotification',
+        'Show release notes on update'
+      ),
+    category: 'advanced',
+    type: 'toggle',
+    getValue: (options) => options.enableReleaseNotesNotification,
+    createUpdate: (_, newValue) => ({ enableReleaseNotesNotification: newValue }),
+  },
+  {
     id: 'toggle.analytics',
     label: () =>
       i18n.t('optionsPage.enableAnalytics', 'Enable anonymous analytics'),

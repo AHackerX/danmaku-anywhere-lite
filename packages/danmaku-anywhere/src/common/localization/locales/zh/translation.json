@@ -10,6 +10,8 @@
     "githubRepositoryDescription": "源代码",
     "imageIllustrator": "图片绘制",
     "qqGroup": "QQ群",
+    "releaseNotes": "更新日志",
+    "releaseNotesDescription": "查看当前版本的更新内容",
     "reportBug": "报告Bug",
     "reportIssueDescription": "如果GitHub Issues无法使用，请使用此表单",
     "resources": "资源",
@@ -378,6 +380,7 @@
       }
     },
     "enableAnalytics": "匿名数据收集",
+    "enableReleaseNotesNotification": "更新时显示更新日志",
     "help": {
       "feedback": "提交意见或建议",
       "reportBug": "报告Bug"

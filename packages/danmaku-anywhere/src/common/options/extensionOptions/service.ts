@@ -240,6 +240,13 @@ export class ExtensionOptionsService implements IStoreService {
           return data
         },
       })
+      .version(22, {
+        upgrade: (data) =>
+          produce<ExtensionOptions>(data, (draft) => {
+            // Add enableReleaseNotesNotification field
+            draft.enableReleaseNotesNotification = true
+          }),
+      })
   }
 
   async get() {

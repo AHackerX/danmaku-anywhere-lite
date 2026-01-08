@@ -10,6 +10,8 @@
     "githubRepositoryDescription": "Source code and contributions",
     "imageIllustrator": "Graphic Illustrator",
     "qqGroup": "QQ Group",
+    "releaseNotes": "Release Notes",
+    "releaseNotesDescription": "View current version release notes",
     "reportBug": "Report a Bug",
     "reportIssueDescription": "Use this if you cannot use GitHub Issues",
     "resources": "Resources",
@@ -391,6 +393,7 @@
       }
     },
     "enableAnalytics": "Enable anonymous analytics",
+    "enableReleaseNotesNotification": "Show release notes on update",
     "help": {
       "feedback": "Provide feedback",
       "reportBug": "Report Bug"
