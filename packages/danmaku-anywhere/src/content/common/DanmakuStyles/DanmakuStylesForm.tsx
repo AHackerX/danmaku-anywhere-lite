@@ -501,6 +501,19 @@ export const DanmakuStylesForm = ({
                       type: 'number',
                     }}
                   />
+                  {field.value !== 0 && (
+                    <Button
+                      size="small"
+                      variant="text"
+                      onClick={() => {
+                        field.onChange(0)
+                        setEditOffsetValue('0')
+                      }}
+                      sx={{ minWidth: 'auto', ml: 1 }}
+                    >
+                      {t('common.reset', 'Reset')}
+                    </Button>
+                  )}
                 </Grid>
               </LabeledSlider>
             )
