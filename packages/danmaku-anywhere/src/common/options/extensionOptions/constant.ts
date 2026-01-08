@@ -38,6 +38,7 @@ export const defaultExtensionOptions: ExtensionOptions = {
     colorMode: ColorMode.System,
   },
   matchLocalDanmaku: true,
+  autoMountDanmaku: true,
   hotkeys: defaultKeymap,
   showReleaseNotes: false,
   enableReleaseNotesNotification: true,

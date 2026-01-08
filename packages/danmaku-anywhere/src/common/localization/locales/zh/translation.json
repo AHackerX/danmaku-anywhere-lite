@@ -161,6 +161,7 @@
   },
   "danmaku": {
     "alert": {
+      "autoMounting": "正在自动装填已保存的弹幕...",
       "deleted": "弹幕已删除",
       "deleteError": "弹幕删除失败：{{message}}",
       "exported": "导出成功",
@@ -395,6 +396,8 @@
     },
     "language": "语言",
     "matchLocalDanmaku": "匹配本地弹幕",
+    "autoMountDanmaku": "自动装填弹幕",
+    "autoMountDanmakuTooltip": "访问之前装填过弹幕的页面时，自动装填上次使用的弹幕（仅在手动模式下生效）",
     "name": "设置",
     "pages": {
       "advanced": "高级设置",

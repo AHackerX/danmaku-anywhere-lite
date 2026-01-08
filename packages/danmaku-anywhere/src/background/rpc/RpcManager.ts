@@ -21,6 +21,10 @@ import { invalidateContentScriptData } from '@/background/utils/invalidateConten
 import type { EpisodeFetchBySeasonParams } from '@/common/danmaku/dto'
 import { DanmakuAnywhereDb } from '@/common/db/db'
 import { type ILogger, LoggerSymbol } from '@/common/Logger'
+import {
+  DanmakuMappingService,
+  extractEpisodeInfo,
+} from '@/common/options/danmakuMapping'
 import { MountConfigService } from '@/common/options/mountConfig/service'
 import { ProviderConfigService } from '@/common/options/providerConfig/service'
 import type { TabRPCClientMethod } from '@/common/rpc/client'
@@ -67,7 +71,9 @@ export class RpcManager {
     @inject(LoggerSymbol) logger: ILogger,
     @inject(DebugFileService) private debugFileService: DebugFileService,
     @inject(ImageCacheService) private imageCacheService: ImageCacheService,
-    @inject(ResetService) private resetService: ResetService
+    @inject(ResetService) private resetService: ResetService,
+    @inject(DanmakuMappingService)
+    private danmakuMappingService: DanmakuMappingService
   ) {
     this.logger = logger.sub('[RpcManager]')
   }
@@ -325,6 +331,17 @@ export class RpcManager {
           await this.resetService.resetAll()
           // Reload the extension to apply changes
           chrome.runtime.reload()
+        },
+        danmakuMappingSave: async ({ url, episodes }) => {
+          const { episodeIds, isCustom } = extractEpisodeInfo(episodes)
+          await this.danmakuMappingService.saveMapping(url, episodeIds, isCustom)
+        },
+        danmakuMappingGet: async (url) => {
+          const result = await this.danmakuMappingService.getMapping(url)
+          return result ?? null
+        },
+        danmakuMappingRemove: async (url) => {
+          await this.danmakuMappingService.removeMapping(url)
         },
       },
       {

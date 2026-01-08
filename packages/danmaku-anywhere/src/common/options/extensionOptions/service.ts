@@ -247,6 +247,13 @@ export class ExtensionOptionsService implements IStoreService {
             draft.enableReleaseNotesNotification = true
           }),
       })
+      .version(23, {
+        upgrade: (data) =>
+          produce<ExtensionOptions>(data, (draft) => {
+            // Add autoMountDanmaku field
+            draft.autoMountDanmaku = true
+          }),
+      })
   }
 
   async get() {

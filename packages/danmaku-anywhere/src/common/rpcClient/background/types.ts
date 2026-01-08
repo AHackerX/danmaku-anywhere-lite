@@ -6,6 +6,7 @@ import type {
   Episode,
   EpisodeLite,
   EpisodeMeta,
+  GenericEpisodeLite,
   Season,
   WithSeason,
 } from '@danmaku-anywhere/danmaku-converter'
@@ -38,6 +39,7 @@ import type {
 } from '@/common/danmaku/dto'
 import type { LogEntry } from '@/common/Logger'
 import type { AiProviderConfigInput } from '@/common/options/aiProviderConfig/schema'
+import type { DanmakuMappingEntry } from '@/common/options/danmakuMapping/schema'
 import type {
   MountConfig,
   MountConfigAiConfig,
@@ -130,6 +132,13 @@ export type BackgroundMethods = {
   providerConfigDelete: RPCDef<string, void>
   testAiProvider: RPCDef<AiProviderConfigInput, TestAiProviderResponse>
   resetExtension: RPCDef<void, void>
+  // Danmaku mapping methods
+  danmakuMappingSave: RPCDef<
+    { url: string; episodes: GenericEpisodeLite[] },
+    void
+  >
+  danmakuMappingGet: RPCDef<string, DanmakuMappingEntry | null>
+  danmakuMappingRemove: RPCDef<string, void>
 }
 
 type InputWithFrameId<TInput> = TInput extends void

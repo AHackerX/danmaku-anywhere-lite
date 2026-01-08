@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { GlobalDialog } from '@/common/components/Dialog/GlobalDialog'
 import { Toast } from '@/common/components/Toast/Toast'
 import { SwitchLanguage } from '@/content/controller/common/components/SwitchLanguage'
+import { useAutoMountDanmaku } from '@/content/controller/common/hooks/useAutoMountDanmaku'
 import { ControllerRpcServer } from '@/content/controller/controllerRpc/ControllerRpcServer'
 import { FrameManager } from '@/content/controller/danmaku/frame/FrameManager'
 import { RegisterIntegration } from '@/content/controller/danmaku/integration/RegisterIntegration'
@@ -15,6 +16,9 @@ import { HIGHLIGHTER_PORTAL_ID } from './common/constants/rootId'
 export const Content = () => {
   const isVisible = useStore((state) => state.danmaku.isVisible)
   const setHighlighterPortal = usePopup.use.setHighlighterPortal()
+
+  // Auto-mount danmaku if there's a saved mapping for this URL
+  useAutoMountDanmaku()
 
   return (
     <>

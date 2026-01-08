@@ -14,6 +14,7 @@ interface ToggleListItemButtonProps {
   disableToggle?: boolean
   onToggle: (checked: boolean) => void
   itemText: string
+  secondaryText?: string
   isLoading?: boolean
   showWarning?: boolean
   warningTooltip?: ReactNode
@@ -22,6 +23,7 @@ interface ToggleListItemButtonProps {
 
 export const ToggleListItemButton = ({
   itemText,
+  secondaryText,
   onToggle,
   enabled,
   disableToggle,
@@ -45,7 +47,11 @@ export const ToggleListItemButton = ({
         )
       }
     >
-      <ListItemText primary={itemText} />
+      <ListItemText
+        primary={itemText}
+        secondary={secondaryText}
+        sx={{ pr: 6 }}
+      />
       {showWarning && (
         <ListItemIcon>
           <Tooltip

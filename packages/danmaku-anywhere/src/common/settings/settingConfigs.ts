@@ -73,6 +73,15 @@ const advancedSettings: SettingConfig<ExtensionOptions>[] = [
     createUpdate: (_, newValue) => ({ matchLocalDanmaku: newValue }),
   },
   {
+    id: 'toggle.autoMountDanmaku',
+    label: () => i18n.t('optionsPage.autoMountDanmaku', 'Auto-mount danmaku'),
+    descriptionKey: 'optionsPage.autoMountDanmakuTooltip',
+    category: 'advanced',
+    type: 'toggle',
+    getValue: (options) => options.autoMountDanmaku,
+    createUpdate: (_, newValue) => ({ autoMountDanmaku: newValue }),
+  },
+  {
     id: 'toggle.searchUsingSimplified',
     label: () =>
       i18n.t(

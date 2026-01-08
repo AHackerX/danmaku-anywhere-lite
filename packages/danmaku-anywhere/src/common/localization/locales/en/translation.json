@@ -162,6 +162,7 @@
   },
   "danmaku": {
     "alert": {
+      "autoMounting": "Auto-mounting saved danmaku...",
       "deleted": "Danmaku Deleted",
       "deleteError": "Failed to delete danmaku: {{message}}",
       "exported": "Export successful",
@@ -408,10 +409,12 @@
     },
     "language": "Language",
     "matchLocalDanmaku": "Enable matching local Danmaku",
+    "autoMountDanmaku": "Auto-mount danmaku",
+    "autoMountDanmakuTooltip": "Automatically mount previously used danmaku when visiting a page (only works in manual mode)",
     "name": "Options",
     "pages": {
       "advanced": "Advanced",
-      "help": "关于",
+      "help": "About",
       "hotkeys": "Hotkeys",
       "player": "Player Settings",
       "retentionPolicy": "Retention Policy"

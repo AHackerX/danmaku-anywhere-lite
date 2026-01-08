@@ -122,6 +122,12 @@ export const extensionOptionsSchema = z.object({
   matchLocalDanmaku: z.boolean(),
 
   /**
+   * Whether to automatically mount danmaku when visiting a page
+   * that has previously had danmaku mounted
+   */
+  autoMountDanmaku: z.boolean(),
+
+  /**
    * Configuration for the theme
    */
   theme: userThemeSchema,

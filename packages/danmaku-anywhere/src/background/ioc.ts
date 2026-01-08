@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { Container } from 'inversify'
 import { type ILogger, LoggerSymbol } from '@/common/Logger'
 import { AiProviderConfigService } from '@/common/options/aiProviderConfig/service'
+import { DanmakuMappingService } from '@/common/options/danmakuMapping/service'
 import { DanmakuOptionsService } from '@/common/options/danmakuOptions/service'
 import { ExtensionOptionsService } from '@/common/options/extensionOptions/service'
 import { GapPresetsService } from '@/common/options/gapPresets/service'
@@ -31,6 +32,9 @@ container.bind(StoreServiceSymbol).toService(MountConfigService)
 container.bind(StoreServiceSymbol).toService(ProviderConfigService)
 container.bind(StoreServiceSymbol).toService(AiProviderConfigService)
 container.bind(StoreServiceSymbol).toService(GapPresetsService)
+
+// Danmaku mapping service
+container.bind(DanmakuMappingService).toSelf().inSingletonScope()
 
 // factory
 container

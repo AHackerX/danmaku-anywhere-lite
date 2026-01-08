@@ -11,7 +11,8 @@ import { DanmakuSourceType } from '@/common/danmaku/enums'
 import { useFetchDanmaku } from '@/common/danmaku/queries/useFetchDanmaku'
 import { useFetchGenericDanmaku } from '@/common/danmaku/queries/useFetchGenericDanmaku'
 import { episodeToString, isProvider } from '@/common/danmaku/utils'
-import { playerRpcClient } from '@/common/rpcClient/background/client'
+import { Logger } from '@/common/Logger'
+import { chromeRpcClient, playerRpcClient } from '@/common/rpcClient/background/client'
 import { concatArr } from '@/common/utils/utils'
 import { useStore } from '@/content/controller/store/store'
 
@@ -37,10 +38,23 @@ const useMountDanmaku = () => {
       if (!res.data) {
         throw new Error('Failed to mount danmaku')
       }
+
+      return episodes
     },
-    onSuccess: (_, danmaku) => {
-      mount(danmaku)
+    onSuccess: (episodes) => {
+      mount(episodes)
       updateFrame(mustGetActiveFrame().frameId, { mounted: true })
+
+      // Save the mapping between current URL and mounted episodes
+      const currentUrl = window.location.href
+      Logger.debug('Saving danmaku mapping', { url: currentUrl, episodes: episodes.map(e => ({ id: e.id, provider: e.provider })) })
+      chromeRpcClient.danmakuMappingSave({ url: currentUrl, episodes })
+        .then(() => {
+          Logger.debug('Danmaku mapping saved successfully')
+        })
+        .catch((err) => {
+          Logger.debug('Failed to save danmaku mapping:', err)
+        })
     },
     onError: (err) => {
       toast.error(err.message)
