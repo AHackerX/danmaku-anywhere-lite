@@ -28,3 +28,4 @@ build
 *.sw?
 
 patch-*
+lefthook.yml
