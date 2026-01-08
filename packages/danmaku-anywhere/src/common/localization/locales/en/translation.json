@@ -561,7 +561,11 @@
       "trackHeight": "Higher values makes danmaku farther apart"
     },
     "trackHeight": "Track Height",
-    "useCustomCss": "Use Custom CSS"
+    "useCustomCss": "Use Custom CSS",
+    "resetStyles": "Reset to Default",
+    "resetStyles.title": "Reset Danmaku Styles",
+    "resetStyles.message": "Are you sure you want to reset all danmaku style settings to default? Filters will not be affected.",
+    "resetStyles.confirm": "Reset"
   },
   "tabs": {
     "aiProviders": "AI Providers",

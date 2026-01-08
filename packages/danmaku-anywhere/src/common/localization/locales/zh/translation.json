@@ -547,7 +547,11 @@
       "trackHeight": "行高越高，弹幕之间的间距越大"
     },
     "trackHeight": "弹幕行高",
-    "useCustomCss": "使用自定义 CSS"
+    "useCustomCss": "使用自定义 CSS",
+    "resetStyles": "恢复默认设置",
+    "resetStyles.title": "重置弹幕设置",
+    "resetStyles.message": "确定要将所有弹幕样式设置恢复为默认值吗？弹幕过滤规则不会受到影响。",
+    "resetStyles.confirm": "重置"
   },
   "tabs": {
     "aiProviders": "AI源",

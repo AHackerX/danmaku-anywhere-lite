@@ -1,4 +1,5 @@
 import {
+  Button,
   Collapse,
   Divider,
   debounce,
@@ -13,12 +14,14 @@ import {
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useDialog } from '@/common/components/Dialog/dialogStore'
 import { DocIcon } from '@/common/components/DocIcon'
 import { getScrollBarProps } from '@/common/components/layout/ScrollBox'
 import { IS_CHROME } from '@/common/constants'
 import { usePlatformInfo } from '@/common/hooks/usePlatformInfo'
 import { useResetForm } from '@/common/hooks/useResetForm'
 import type { DanmakuOptions } from '@/common/options/danmakuOptions/constant'
+import { defaultDanmakuOptions } from '@/common/options/danmakuOptions/constant'
 import { useDanmakuOptions } from '@/common/options/danmakuOptions/useDanmakuOptions'
 import { withStopPropagation } from '@/common/utils/withStopPropagation'
 import { FontSelector } from '@/content/common/DanmakuStyles/FontSelector'
@@ -215,13 +218,14 @@ export const DanmakuStylesForm = ({
   const { t } = useTranslation()
   const { data: config, partialUpdate } = useDanmakuOptions()
   const { isMobile } = usePlatformInfo()
+  const dialog = useDialog()
 
   const form = useForm<DanmakuOptions>({
     defaultValues: config,
     mode: 'onChange',
   })
 
-  const { control, setValue, getValues, watch, handleSubmit, subscribe } = form
+  const { control, setValue, getValues, watch, handleSubmit, subscribe, reset } = form
 
   const onSave = async (formData: DanmakuOptions) => {
     onSaveStatusChange?.('saving')
@@ -229,6 +233,28 @@ export const DanmakuStylesForm = ({
     await partialUpdate(formData)
 
     onSaveStatusChange?.('saved')
+  }
+
+  const handleResetStyles = () => {
+    dialog.delete({
+      title: t('stylePage.resetStyles.title', 'Reset Danmaku Styles'),
+      content: t(
+        'stylePage.resetStyles.message',
+        'Are you sure you want to reset all danmaku style settings to default? Filters will not be affected.'
+      ),
+      confirmText: t('stylePage.resetStyles.confirm', 'Reset'),
+      onConfirm: async () => {
+        // Keep current filters, reset everything else
+        const currentFilters = config.filters
+        const resetConfig: DanmakuOptions = {
+          ...defaultDanmakuOptions,
+          filters: currentFilters,
+        }
+        reset(resetConfig)
+        await partialUpdate(resetConfig)
+        onSaveStatusChange?.('saved')
+      },
+    })
   }
 
   const resetFlag = useResetForm({
@@ -702,6 +728,18 @@ export const DanmakuStylesForm = ({
             />
           )}
         />
+      </Stack>
+
+      <Stack spacing={1} mt={3}>
+        <Divider />
+        <Button
+          variant="outlined"
+          color="warning"
+          onClick={handleResetStyles}
+          fullWidth
+        >
+          {t('stylePage.resetStyles', 'Reset to Default')}
+        </Button>
       </Stack>
     </>
   )
