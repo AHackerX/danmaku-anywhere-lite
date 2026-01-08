@@ -470,9 +470,9 @@ export const DanmakuStylesForm = ({
                   }
                 }}
                 gridSize={8}
-                step={10}
-                min={-5000}
-                max={5000}
+                step={50}
+                min={-100000}
+                max={100000}
                 size="small"
                 valueLabelDisplay="auto"
                 valueLabelFormat={offsetValueLabelFormat}
