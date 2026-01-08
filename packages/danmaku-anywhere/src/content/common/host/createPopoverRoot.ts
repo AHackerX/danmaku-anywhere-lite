@@ -16,7 +16,7 @@ export const createPopoverRoot = ({ id }: PopoverRootOptions) => {
   // make the root element a popover so it can be shown on top of everything
   root.setAttribute('popover', 'manual')
 
-  const shadowContainer = root.attachShadow({ mode: 'closed' })
+  const shadowContainer = root.attachShadow({ mode: 'open' })
   const shadowRoot = document.createElement('div')
 
   shadowContainer.appendChild(shadowRoot)
