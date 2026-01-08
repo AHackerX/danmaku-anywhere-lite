@@ -125,6 +125,20 @@ export class DanmakuRenderer {
 
     if (!this.manager) return
 
+    // Check if we need to recreate the danmaku (settings that require remount)
+    const needsRecreate =
+      prevConfig.distribution !== this.config.distribution ||
+      !deepEqual(prevConfig.gaps, this.config.gaps) ||
+      !deepEqual(prevConfig.specialComments, this.config.specialComments) ||
+      !deepEqual(prevConfig.filters, this.config.filters)
+
+    if (needsRecreate && this.container && this.media && this.created) {
+      // Silent remount: recreate danmaku with new config
+      // The bindVideo plugin will handle seeking to current time with progress
+      this.create(this.container, this.media, this.comments, this.config)
+      return
+    }
+
     if (!deepEqual(prevConfig.area, this.config.area)) {
       this.setArea()
     }

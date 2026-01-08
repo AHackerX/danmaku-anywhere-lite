@@ -219,8 +219,8 @@ export const bindVideo =
         // the offset changes only when the config changes
         if (getConfig().offset !== offset) {
           offset = getConfig().offset / 1000
-          updateCursor()
-          manager.clear()
+          // Reuse handleSeek logic: clear, update cursor, and re-emit danmaku with progress
+          handleSeek()
         }
       },
     })
