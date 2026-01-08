@@ -565,7 +565,22 @@
     "resetStyles": "Reset to Default",
     "resetStyles.title": "Reset Danmaku Styles",
     "resetStyles.message": "Are you sure you want to reset all danmaku style settings to default? Filters will not be affected.",
-    "resetStyles.confirm": "Reset"
+    "resetStyles.confirm": "Reset",
+    "gaps": {
+      "title": "Danmaku Gaps",
+      "description": "Danmaku within these time ranges will be delayed until the range ends",
+      "empty": "No gaps configured",
+      "start": "Start",
+      "end": "End",
+      "duration": "Duration",
+      "savePreset": "Save as Preset",
+      "loadPreset": "Load Preset",
+      "presetName": "Preset Name",
+      "noPresets": "No presets saved",
+      "presetGapCount_one": "{{count}} gap",
+      "presetGapCount_other": "{{count}} gaps",
+      "renamePreset": "Rename Preset"
+    }
   },
   "tabs": {
     "aiProviders": "AI Providers",

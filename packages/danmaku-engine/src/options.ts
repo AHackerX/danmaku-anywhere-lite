@@ -12,6 +12,18 @@ export interface DanmakuStyle {
 
 export type FixedCommentMode = 'normal' | 'hidden' | 'scroll'
 
+/**
+ * A time range where danmaku emission is paused
+ * Danmaku with time >= start will be delayed until the video reaches end
+ */
+export interface DanmakuGap {
+  /** Start time in seconds */
+  start: number
+  /** End time in seconds */
+  end: number
+  enabled: boolean
+}
+
 export interface DanmakuOptions {
   readonly style: DanmakuStyle
   readonly show: boolean
@@ -62,6 +74,11 @@ export interface DanmakuOptions {
     top: FixedCommentMode
     bottom: FixedCommentMode
   }
+  /**
+   * Time gaps where danmaku emission is paused
+   * Danmaku within these ranges will be delayed until the gap ends
+   */
+  readonly gaps: DanmakuGap[]
 }
 
 export const DEFAULT_DANMAKU_OPTIONS: DanmakuOptions = {
@@ -91,4 +108,5 @@ export const DEFAULT_DANMAKU_OPTIONS: DanmakuOptions = {
   },
   offset: 0,
   distribution: 'random',
+  gaps: [],
 }

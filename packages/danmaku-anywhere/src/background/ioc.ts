@@ -4,6 +4,7 @@ import { type ILogger, LoggerSymbol } from '@/common/Logger'
 import { AiProviderConfigService } from '@/common/options/aiProviderConfig/service'
 import { DanmakuOptionsService } from '@/common/options/danmakuOptions/service'
 import { ExtensionOptionsService } from '@/common/options/extensionOptions/service'
+import { GapPresetsService } from '@/common/options/gapPresets/service'
 import { StoreServiceSymbol } from '@/common/options/IStoreService'
 import { IntegrationPolicyService } from '@/common/options/integrationPolicyStore/service'
 import { MountConfigService } from '@/common/options/mountConfig/service'
@@ -29,6 +30,7 @@ container.bind(StoreServiceSymbol).toService(IntegrationPolicyService)
 container.bind(StoreServiceSymbol).toService(MountConfigService)
 container.bind(StoreServiceSymbol).toService(ProviderConfigService)
 container.bind(StoreServiceSymbol).toService(AiProviderConfigService)
+container.bind(StoreServiceSymbol).toService(GapPresetsService)
 
 // factory
 container

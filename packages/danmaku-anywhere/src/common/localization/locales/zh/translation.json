@@ -551,7 +551,21 @@
     "resetStyles": "恢复默认设置",
     "resetStyles.title": "重置弹幕设置",
     "resetStyles.message": "确定要将所有弹幕样式设置恢复为默认值吗？弹幕过滤规则不会受到影响。",
-    "resetStyles.confirm": "重置"
+    "resetStyles.confirm": "重置",
+    "gaps": {
+      "title": "弹幕空域",
+      "description": "在指定时间范围内暂停弹幕发射，范围结束后恢复",
+      "empty": "未配置空域",
+      "start": "开始",
+      "end": "结束",
+      "duration": "时长",
+      "savePreset": "保存为预设",
+      "loadPreset": "加载预设",
+      "presetName": "预设名称",
+      "noPresets": "暂无预设",
+      "presetGapCount": "{{count}}个空域",
+      "renamePreset": "重命名预设"
+    }
   },
   "tabs": {
     "aiProviders": "AI源",

@@ -8,6 +8,7 @@ import {
 import { type ILogger, Logger, LoggerSymbol } from '../Logger'
 import { i18n } from '../localization/i18n'
 import { ExtensionOptionsService } from '../options/extensionOptions/service'
+import { GapPresetsService } from '../options/gapPresets/service'
 
 const uiContainer = new Container({ autobind: true, defaultScope: 'Singleton' })
 
@@ -16,6 +17,8 @@ uiContainer
   .toFactory(optionsServiceFactory)
 
 uiContainer.bind<ILogger>(LoggerSymbol).toConstantValue(Logger)
+
+uiContainer.bind(GapPresetsService).toSelf().inSingletonScope()
 
 uiContainer
   .get(ExtensionOptionsService)

@@ -37,4 +37,5 @@ export const defaultDanmakuOptions: DanmakuOptions = {
   },
   offset: 0,
   distribution: 'random',
+  gaps: [],
 }

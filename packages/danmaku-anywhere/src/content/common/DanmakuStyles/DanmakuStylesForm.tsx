@@ -26,6 +26,7 @@ import { useDanmakuOptions } from '@/common/options/danmakuOptions/useDanmakuOpt
 import { withStopPropagation } from '@/common/utils/withStopPropagation'
 import { FontSelector } from '@/content/common/DanmakuStyles/FontSelector'
 import { LabeledSwitch } from '@/content/common/DanmakuStyles/LabeledSwitch'
+import { DanmakuGapsEditor } from './DanmakuGapsEditor'
 import { LabeledSlider } from './LabeledSlider'
 
 const opacityMarks = [
@@ -738,6 +739,23 @@ export const DanmakuStylesForm = ({
               onChange={(e) => {
                 field.onChange(e.target.checked ? 'normal' : 'scroll')
               }}
+            />
+          )}
+        />
+      </Stack>
+
+      <Stack spacing={1} mt={2}>
+        <Typography variant="h6" fontSize={18} component="div">
+          {t('stylePage.gaps.title', 'Danmaku Gaps')}
+        </Typography>
+        <Divider />
+        <Controller
+          name="gaps"
+          control={control}
+          render={({ field }) => (
+            <DanmakuGapsEditor
+              gaps={field.value || []}
+              onChange={field.onChange}
             />
           )}
         />

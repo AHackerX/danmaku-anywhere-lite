@@ -1,5 +1,5 @@
 import type { Manager } from '@mr-quin/danmu'
-import type { DanmakuOptions } from '../options'
+import type { DanmakuGap, DanmakuOptions } from '../options'
 import type { ParsedComment } from '../parser'
 import { useFixedDanmaku } from './fixedDanmaku'
 
@@ -20,6 +20,44 @@ const binarySearch = (comments: ParsedComment[], time: number): number => {
     }
   }
   return ans
+}
+
+/**
+ * Calculate the effective video time considering gaps
+ * This maps the actual video time to the "danmaku timeline"
+ * 
+ * For example, if there's a gap from 60-120s (duration 60s):
+ * - Video time 50s -> effective time 50s (before gap)
+ * - Video time 90s -> effective time 60s (inside gap, clamped to gap start)
+ * - Video time 150s -> effective time 90s (after gap, subtract gap duration)
+ */
+const getEffectiveTime = (videoTime: number, gaps: DanmakuGap[]): number => {
+  let effectiveTime = videoTime
+  for (const gap of gaps) {
+    if (!gap.enabled) continue
+    const gapDuration = gap.end - gap.start
+    
+    if (videoTime >= gap.end) {
+      // Video is past this gap, subtract the gap duration
+      effectiveTime -= gapDuration
+    } else if (videoTime >= gap.start) {
+      // Video is inside this gap, clamp to gap start
+      effectiveTime -= (videoTime - gap.start)
+    }
+  }
+  return effectiveTime
+}
+
+/**
+ * Check if the video time is currently inside any gap
+ */
+const isInsideGap = (videoTime: number, gaps: DanmakuGap[]): boolean => {
+  for (const gap of gaps) {
+    if (gap.enabled && videoTime >= gap.start && videoTime < gap.end) {
+      return true
+    }
+  }
+  return false
 }
 
 const DURATION_MS = 5000
@@ -43,7 +81,9 @@ export const bindVideo =
     const updateCursor = () => {
       // include danmaku that are within the duration range
       // so that we can "catch up" with the last
-      cursor = binarySearch(comments, video.currentTime - offset - DURATION_S)
+      const gaps = getConfig().gaps || []
+      const effectiveTime = getEffectiveTime(video.currentTime - offset, gaps)
+      cursor = binarySearch(comments, effectiveTime - DURATION_S)
     }
 
     updateCursor()
@@ -90,27 +130,38 @@ export const bindVideo =
 
     const handleTimeupdate = () => {
       const offsetTime = video.currentTime - offset
+      const gaps = getConfig().gaps || []
 
-      if (cursor >= comments.length || comments[cursor].time > offsetTime) {
+      // Check if we're currently in a gap - if so, don't emit any danmaku
+      if (isInsideGap(offsetTime, gaps)) {
         return
       }
 
+      // Calculate the effective time on the danmaku timeline
+      // This accounts for gaps that have already passed
+      const effectiveTime = getEffectiveTime(offsetTime, gaps)
+
+      if (cursor >= comments.length) {
+        return
+      }
+
+      // Process comments based on effective time
       while (cursor < comments.length) {
         const comment = comments[cursor]
+        const commentTime = comment.time
 
-        // return early if we haven't reached the comment time
-        if (comment.time > offsetTime) {
+        // If we haven't reached this comment's time on the effective timeline, stop
+        if (commentTime > effectiveTime) {
           return
         }
 
-        // for danmaku that are in the "past", set the progress so that they can start in the middle of the screen
-        let progress = (offsetTime - comment.time) / DURATION_S
+        // Calculate progress based on how far past the comment time we are
+        let progress = (effectiveTime - commentTime) / DURATION_S
         if (progress < 0.1) {
           progress = 0
         }
 
         if (documentVisible) {
-          // emitting while the page is not visible causes comments to "pile up"
           emitDanmaku(comment, progress)
         }
 
