@@ -26,9 +26,9 @@ const shouldFilter = (comment: string, filters: DanmakuFilter[]): boolean => {
   })
 }
 
-// Check if a time falls within any gap
+// Check if a time falls within any enabled gap
 const isInGap = (time: number, gaps: DanmakuGap[]): boolean => {
-  return gaps.some((gap) => time >= gap.start && time < gap.end)
+  return gaps.some((gap) => gap.enabled && time >= gap.start && time < gap.end)
 }
 
 export function computeDensityBins(

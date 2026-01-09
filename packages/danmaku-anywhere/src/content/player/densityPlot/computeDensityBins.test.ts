@@ -87,7 +87,7 @@ describe('computeDensityBins', () => {
     // Comments at 5s, 15s, 25s
     const comments = [c(5), c(15), c(25)]
     const binsWithGap = computeDensityBins(comments, duration, 30, {
-      gaps: [{ start: 10, end: 20 }], // Gap from 10s to 20s
+      gaps: [{ start: 10, end: 20, enabled: true }], // Gap from 10s to 20s
     })
 
     // Comment at 15s should be excluded (in gap)
@@ -106,7 +106,7 @@ describe('computeDensityBins', () => {
     const bins = computeDensityBins(comments, duration, 30, {
       offset: 5000, // 5s offset
       filters: [{ type: 'text', value: 'filter', enabled: true }],
-      gaps: [{ start: 20, end: 30 }], // Gap from 20s to 30s
+      gaps: [{ start: 20, end: 30, enabled: true }], // Gap from 20s to 30s
     })
 
     // After offset: 10s, 15s (filtered), 25s (in gap), 35s
