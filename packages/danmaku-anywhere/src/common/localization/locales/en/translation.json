@@ -446,6 +446,16 @@
     },
     "uploadDebugData": "Submit Debug Data",
     "uploadDebugDataSuccess": "Submitted {{ id }}",
+    "configBackup": {
+      "title": "Config Backup",
+      "export": "Export Config",
+      "import": "Import Config",
+      "description": "Export or import danmaku styles and extension settings. Danmaku data is not included.",
+      "exportSuccess": "Config exported successfully",
+      "exportError": "Failed to export config: {{message}}",
+      "importSuccess": "Config imported successfully",
+      "importError": "Failed to import config: {{message}}"
+    },
     "resetExtension": "Reset Extension",
     "resetExtension.title": "Reset Extension",
     "resetExtension.message": "Are you sure you want to reset the extension? This will delete all settings, saved danmaku, and cached data. This action cannot be undone.",

@@ -39,6 +39,7 @@ import type {
 } from '@/common/danmaku/dto'
 import type { LogEntry } from '@/common/Logger'
 import type { AiProviderConfigInput } from '@/common/options/aiProviderConfig/schema'
+import type { ConfigBackup } from '@/common/options/configBackup/types'
 import type { DanmakuMappingEntry } from '@/common/options/danmakuMapping/schema'
 import type {
   MountConfig,
@@ -139,6 +140,9 @@ export type BackgroundMethods = {
   >
   danmakuMappingGet: RPCDef<string, DanmakuMappingEntry | null>
   danmakuMappingRemove: RPCDef<string, void>
+  // Config backup methods
+  configBackupExport: RPCDef<void, ConfigBackup>
+  configBackupImport: RPCDef<ConfigBackup, void>
 }
 
 type InputWithFrameId<TInput> = TInput extends void

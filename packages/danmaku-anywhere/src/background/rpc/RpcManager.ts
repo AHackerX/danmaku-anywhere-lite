@@ -25,6 +25,7 @@ import {
   DanmakuMappingService,
   extractEpisodeInfo,
 } from '@/common/options/danmakuMapping'
+import { ConfigBackupService } from '@/common/options/configBackup/service'
 import { MountConfigService } from '@/common/options/mountConfig/service'
 import { ProviderConfigService } from '@/common/options/providerConfig/service'
 import type { TabRPCClientMethod } from '@/common/rpc/client'
@@ -73,7 +74,9 @@ export class RpcManager {
     @inject(ImageCacheService) private imageCacheService: ImageCacheService,
     @inject(ResetService) private resetService: ResetService,
     @inject(DanmakuMappingService)
-    private danmakuMappingService: DanmakuMappingService
+    private danmakuMappingService: DanmakuMappingService,
+    @inject(ConfigBackupService)
+    private configBackupService: ConfigBackupService
   ) {
     this.logger = logger.sub('[RpcManager]')
   }
@@ -342,6 +345,12 @@ export class RpcManager {
         },
         danmakuMappingRemove: async (url) => {
           await this.danmakuMappingService.removeMapping(url)
+        },
+        configBackupExport: async () => {
+          return this.configBackupService.exportConfig()
+        },
+        configBackupImport: async (backup) => {
+          await this.configBackupService.importConfig(backup)
         },
       },
       {

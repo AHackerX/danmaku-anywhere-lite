@@ -432,6 +432,16 @@
     },
     "uploadDebugData": "提交调试数据",
     "uploadDebugDataSuccess": "提交成功 {{ id }}",
+    "configBackup": {
+      "title": "配置备份",
+      "export": "导出配置",
+      "import": "导入配置",
+      "description": "导出或导入弹幕样式和扩展设置。不包含弹幕数据。",
+      "exportSuccess": "配置导出成功",
+      "exportError": "配置导出失败：{{message}}",
+      "importSuccess": "配置导入成功",
+      "importError": "配置导入失败：{{message}}"
+    },
     "resetExtension": "重置扩展",
     "resetExtension.title": "重置扩展",
     "resetExtension.message": "确定要重置扩展吗？这将删除所有设置、已保存的弹幕和缓存数据。此操作无法撤销。",
