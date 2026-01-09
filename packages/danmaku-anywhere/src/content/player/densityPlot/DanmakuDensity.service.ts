@@ -2,8 +2,13 @@ import type { CommentEntity } from '@danmaku-anywhere/danmaku-converter'
 import { debounce } from '@mui/material'
 import { inject, injectable } from 'inversify'
 import { type ILogger, LoggerSymbol } from '@/common/Logger'
+import type { DanmakuOptions } from '@/common/options/danmakuOptions/constant'
+import { DanmakuOptionsService } from '@/common/options/danmakuOptions/service'
 import { DanmakuLayoutService } from '@/content/player/danmakuLayout/DanmakuLayout.service'
-import { computeDensityBins } from '@/content/player/densityPlot/computeDensityBins'
+import {
+  computeDensityBins,
+  type ComputeDensityOptions,
+} from '@/content/player/densityPlot/computeDensityBins'
 import { DanmakuDensityChart } from '@/content/player/densityPlot/DanmakuDensityChart'
 import type { DensityPoint } from '@/content/player/densityPlot/types'
 import { VideoEventService } from '@/content/player/videoEvent/VideoEvent.service'
@@ -21,6 +26,9 @@ export class DanmakuDensityService {
   private binSizeSec = 10
   private chartHeight = 28
 
+  // Danmaku options for density calculation
+  private danmakuOptions: ComputeDensityOptions = {}
+
   private showChartTimeout: ReturnType<typeof setTimeout> | null = null
   private resizeObserver: ResizeObserver | null = null
 
@@ -34,6 +42,8 @@ export class DanmakuDensityService {
     private readonly videoEventService: VideoEventService,
     @inject(DanmakuLayoutService)
     private readonly layoutService: DanmakuLayoutService,
+    @inject(DanmakuOptionsService)
+    private readonly danmakuOptionsService: DanmakuOptionsService,
     @inject(LoggerSymbol) logger: ILogger
   ) {
     this.logger = logger.sub('[DanmakuDensityService]')
@@ -48,6 +58,29 @@ export class DanmakuDensityService {
         played: 'rgba(255, 255, 255, 0.45)',
       },
     })
+
+    // Subscribe to danmaku options changes
+    this.danmakuOptionsService.onChange(this.handleOptionsChange.bind(this))
+    // Load initial options
+    this.danmakuOptionsService.get().then((options) => {
+      this.updateOptions(options)
+    })
+  }
+
+  private handleOptionsChange(options: DanmakuOptions) {
+    this.updateOptions(options)
+    // Recompute density when options change
+    if (this.enabled) {
+      this.tryComputeAndRender()
+    }
+  }
+
+  private updateOptions(options: DanmakuOptions) {
+    this.danmakuOptions = {
+      offset: options.offset,
+      filters: options.filters,
+      gaps: options.gaps,
+    }
   }
 
   enable() {
@@ -121,7 +154,12 @@ export class DanmakuDensityService {
   }
 
   private computeBins(duration: number) {
-    this.data = computeDensityBins(this.comments, duration, this.binSizeSec)
+    this.data = computeDensityBins(
+      this.comments,
+      duration,
+      this.binSizeSec,
+      this.danmakuOptions
+    )
   }
 
   private tryComputeAndRender() {
