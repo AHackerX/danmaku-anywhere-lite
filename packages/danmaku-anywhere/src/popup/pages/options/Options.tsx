@@ -80,6 +80,10 @@ export const Options = () => {
             onClick={() => navigate('player')}
           />
           <OptionsListItem
+            title={t('optionsPage.pages.backupSync')}
+            onClick={() => navigate('backup-sync')}
+          />
+          <OptionsListItem
             title={t('optionsPage.pages.advanced', 'Advanced')}
             onClick={() => navigate('advanced')}
           />

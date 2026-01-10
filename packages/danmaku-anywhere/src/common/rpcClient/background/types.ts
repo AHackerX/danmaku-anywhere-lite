@@ -45,6 +45,7 @@ import type {
   MountConfig,
   MountConfigAiConfig,
 } from '@/common/options/mountConfig/schema'
+import type { WebDAVConfig, WebDAVTestResult } from '@/common/options/webdav/types'
 import type { SeasonMapSnapshot } from '@/common/seasonMap/SeasonMap'
 import type { RPCDef } from '../../rpc/types'
 
@@ -143,6 +144,13 @@ export type BackgroundMethods = {
   // Config backup methods
   configBackupExport: RPCDef<void, ConfigBackup>
   configBackupImport: RPCDef<ConfigBackup, void>
+  // WebDAV methods
+  webdavGetConfig: RPCDef<void, WebDAVConfig>
+  webdavSetConfig: RPCDef<WebDAVConfig, void>
+  webdavTestConnection: RPCDef<WebDAVConfig | void, WebDAVTestResult>
+  webdavUpload: RPCDef<void, void>
+  webdavDownload: RPCDef<void, ConfigBackup>
+  webdavSync: RPCDef<void, void>
 }
 
 type InputWithFrameId<TInput> = TInput extends void

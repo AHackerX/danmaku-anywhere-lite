@@ -16,6 +16,7 @@ import {
   optionsServiceFactory,
 } from '@/common/options/OptionsService/OptionServiceFactory'
 import { ProviderConfigService } from '@/common/options/providerConfig/service'
+import { WebDAVService } from '@/common/options/webdav/service'
 import { Logger } from './backgroundLogger'
 import {
   DanmakuProviderFactory,
@@ -33,6 +34,9 @@ container.bind(StoreServiceSymbol).toService(MountConfigService)
 container.bind(StoreServiceSymbol).toService(ProviderConfigService)
 container.bind(StoreServiceSymbol).toService(AiProviderConfigService)
 container.bind(StoreServiceSymbol).toService(GapPresetsService)
+
+// WebDAV service (must be before ConfigBackupService since it depends on it)
+container.bind(StoreServiceSymbol).toService(WebDAVService)
 
 // Danmaku mapping service
 container.bind(DanmakuMappingService).toSelf().inSingletonScope()

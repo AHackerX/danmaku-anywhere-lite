@@ -10,7 +10,6 @@ import {
 } from '@/common/settings/settingConfigs'
 import { OptionsPageToolBar } from '@/popup/component/OptionsPageToolbar'
 import { OptionsPageLayout } from '@/popup/layout/OptionsPageLayout'
-import { ConfigBackupSection } from '@/popup/pages/options/pages/advanced/ConfigBackup'
 import { DeclarativeButtonSetting } from '@/popup/pages/options/components/DeclarativeButtonSetting'
 import { DeclarativeToggleSetting } from '@/popup/pages/options/components/DeclarativeToggleSetting'
 
@@ -52,7 +51,6 @@ export const AdvancedOptions = () => {
         config={UPLOAD_DEBUG_DATA_BUTTON}
         isLoading={isLoading}
       />
-      <ConfigBackupSection />
       <DeclarativeButtonSetting
         config={RESET_EXTENSION_BUTTON}
         isLoading={isLoading || isResetting}

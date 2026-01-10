@@ -3,6 +3,7 @@ import { createHashRouter, Navigate } from 'react-router'
 import { ImportConfigPage } from '@/popup/pages/config/pages/import/ImportConfigPage'
 import { FilterPage } from '@/popup/pages/filterPage/FilterPage'
 import { AdvancedOptions } from '@/popup/pages/options/pages/advanced/AdvancedOptions'
+import { BackupSyncPage } from '@/popup/pages/options/pages/backup/BackupSyncPage'
 import { About } from '@/popup/pages/options/pages/help/About'
 import { PlayerOptions } from '@/popup/pages/options/pages/player/PlayerOptions'
 import { SeasonDetailsPage } from '@/popup/pages/search/seasonDetails/SeasonDetailsPage'
@@ -127,6 +128,10 @@ export const router: ReturnType<typeof createHashRouter> = createHashRouter([
       {
         path: 'advanced',
         Component: AdvancedOptions,
+      },
+      {
+        path: 'backup-sync',
+        Component: BackupSyncPage,
       },
       {
         path: 'help',

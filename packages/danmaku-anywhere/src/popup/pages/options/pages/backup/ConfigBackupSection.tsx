@@ -98,11 +98,10 @@ export const ConfigBackupSection = () => {
   }
 
   return (
-    <Stack spacing={2} mt={2}>
+    <Stack spacing={2} mt={2} px={2}>
       <Typography variant="subtitle2" color="text.secondary">
         {t('optionsPage.configBackup.title')}
       </Typography>
-      <Divider />
       <Stack direction="row" spacing={2}>
         <Button
           variant="outlined"
@@ -133,6 +132,7 @@ export const ConfigBackupSection = () => {
       <Typography variant="caption" color="text.secondary">
         {t('optionsPage.configBackup.description')}
       </Typography>
+      <Divider />
     </Stack>
   )
 }

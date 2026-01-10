@@ -28,6 +28,7 @@ import {
 import { ConfigBackupService } from '@/common/options/configBackup/service'
 import { MountConfigService } from '@/common/options/mountConfig/service'
 import { ProviderConfigService } from '@/common/options/providerConfig/service'
+import { WebDAVService } from '@/common/options/webdav/service'
 import type { TabRPCClientMethod } from '@/common/rpc/client'
 import type { RRPServerHandler } from '@/common/rpc/server'
 import { createRpcServer } from '@/common/rpc/server'
@@ -76,7 +77,9 @@ export class RpcManager {
     @inject(DanmakuMappingService)
     private danmakuMappingService: DanmakuMappingService,
     @inject(ConfigBackupService)
-    private configBackupService: ConfigBackupService
+    private configBackupService: ConfigBackupService,
+    @inject(WebDAVService)
+    private webdavService: WebDAVService
   ) {
     this.logger = logger.sub('[RpcManager]')
   }
@@ -351,6 +354,25 @@ export class RpcManager {
         },
         configBackupImport: async (backup) => {
           await this.configBackupService.importConfig(backup)
+        },
+        // WebDAV methods
+        webdavGetConfig: async () => {
+          return this.webdavService.getConfig()
+        },
+        webdavSetConfig: async (config) => {
+          await this.webdavService.setConfig(config)
+        },
+        webdavTestConnection: async (config) => {
+          return this.webdavService.testConnection(config ?? undefined)
+        },
+        webdavUpload: async () => {
+          await this.webdavService.uploadConfig()
+        },
+        webdavDownload: async () => {
+          return this.webdavService.downloadConfig()
+        },
+        webdavSync: async () => {
+          await this.webdavService.syncFromRemote()
         },
       },
       {
